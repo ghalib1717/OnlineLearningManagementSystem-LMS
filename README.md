@@ -403,7 +403,9 @@ Ensure that sensitive configuration files, credentials, and private database inf
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Ghalib Hussain**
+**Jay Prakash**
+**Arun Sharma**
 
 ---
 
