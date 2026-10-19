@@ -3,68 +3,208 @@ package lms;
 import jakarta.servlet.http.*;
 import java.util.*;
 
-/** Login, registration, logout and role-based home redirect. */
 public class AuthServlet extends BaseServlet {
-    @Override protected String requiredRole() { return null; }
 
     @Override
-    protected void handle(HttpServletRequest q, HttpServletResponse r, Map<String, Object> u, String p) throws Exception {
+    protected String requiredRole() {
+        return null;
+    }
+
+    @Override
+    protected void handle(
+            HttpServletRequest q,
+            HttpServletResponse r,
+            Map<String, Object> u,
+            String p
+    ) throws Exception {
+
         switch (p) {
+
             case "/login" -> {
-                if (u != null) { r.sendRedirect("/"); return; }
-                if ("POST".equals(q.getMethod())) login(q, r); else loginPage(q, r);
+                if ("POST".equals(q.getMethod())) {
+                    login(q, r);
+                } else {
+                    loginPage(r);
+                }
             }
+
             case "/register" -> {
-                if (u != null) { r.sendRedirect("/"); return; }
-                if ("POST".equals(q.getMethod())) register(q, r); else registerPage(q, r);
+                if ("POST".equals(q.getMethod())) {
+                    register(q, r);
+                } else {
+                    registerPage(q, r);
+                }
             }
+
             case "/logout" -> {
-                if (u != null) ActivityLog.log(u.get("name") + " logged out");
-                q.getSession().invalidate();
-                r.sendRedirect("/login");
+                if (u != null) {
+                    ActivityLog.log(
+                            u.get("name") + " logged out"
+                    );
+                }
+
+                HttpSession session = q.getSession(false);
+
+                if (session != null) {
+                    session.invalidate();
+                }
+
+                r.sendRedirect("/login.html");
             }
-            default -> r.sendRedirect(u == null ? "/login" : "/" + String.valueOf(u.get("user_role")).toLowerCase());
+
+            default -> {
+                if (u == null) {
+                    r.sendRedirect("/login.html");
+                } else {
+                    String role = String.valueOf(
+                            u.get("user_role")
+                    ).toLowerCase();
+
+                    r.sendRedirect("/" + role);
+                }
+            }
         }
     }
 
-    private void loginPage(HttpServletRequest q, HttpServletResponse r) throws Exception {
-        String f = input("Email", "email", "email", "", true) + input("Password", "password", "password", "", true);
-        page(q, r, null, "Login", "<section class='card narrow'><h2>Sign in</h2>" + form("/login", f, "Login")
-            + "<p class='muted'>New here? <a href='/register'>Create an account</a></p>"
-            + "<p class='hint'><b>Demo:</b> admin@lms.com / admin123 &middot; instructor@lms.com / teach123 &middot; student@lms.com / learn123</p></section>");
+    // ---------- Login page ----------
+
+    private void loginPage(HttpServletResponse r)
+            throws Exception {
+
+        r.sendRedirect("/login.html");
     }
 
-    private void login(HttpServletRequest q, HttpServletResponse r) throws Exception {
-        Map<String, Object> user = Db.one("SELECT * FROM users WHERE email=? AND password=?", req(q, "email").toLowerCase(), Db.hash(req(q, "password")));
-        if (user == null) throw new LmsException("Invalid email or password.");
-        HttpSession old = q.getSession();
-        old.invalidate();
-        q.getSession(true).setAttribute("user", user);
-        ActivityLog.log(user.get("name") + " (" + user.get("user_role") + ") logged in");
-        r.sendRedirect("/" + String.valueOf(user.get("user_role")).toLowerCase());
+    // ---------- Login backend ----------
+
+    private void login(
+            HttpServletRequest q,
+            HttpServletResponse r
+    ) throws Exception {
+
+        String email = req(q, "email").toLowerCase();
+        String password = req(q, "password");
+
+        Map<String, Object> user = Db.one(
+                "SELECT * FROM users WHERE email=? AND password=?",
+                email,
+                Db.hash(password)
+        );
+
+        if (user == null) {
+            throw new LmsException(
+                    "Invalid email or password."
+            );
+        }
+
+        // Invalidate the previous session after authentication.
+        HttpSession oldSession = q.getSession(false);
+
+        if (oldSession != null) {
+            oldSession.invalidate();
+        }
+
+        // Create a new authenticated session.
+        HttpSession newSession = q.getSession(true);
+        newSession.setAttribute("user", user);
+
+        ActivityLog.log(
+                user.get("name") + " ("
+                + user.get("user_role") + ") logged in"
+        );
+
+        String role = String.valueOf(
+                user.get("user_role")
+        ).toLowerCase();
+
+        r.sendRedirect("/" + role);
     }
 
-    private void registerPage(HttpServletRequest q, HttpServletResponse r) throws Exception {
-        if (!"true".equals(Db.setting("allow_registration", "true"))) {
-            page(q, r, null, "Register", "<section class='card narrow'><h2>Registration closed</h2><p>Self-registration is disabled by the administrator.</p><a class='btn' href='/login'>Back to login</a></section>");
+    // ---------- Registration page ----------
+
+    private void registerPage(
+            HttpServletRequest q,
+            HttpServletResponse r
+    ) throws Exception {
+
+        if (!"true".equals(
+                Db.setting("allow_registration", "true"))) {
+
+            page(
+                    q,
+                    r,
+                    null,
+                    "Registration Closed",
+                    "<section class='card narrow'>"
+                    + "<h2>Registration closed</h2>"
+                    + "<p>Self-registration is disabled "
+                    + "by the administrator.</p>"
+                    + "<a class='btn' href='/login.html'>"
+                    + "Back to login</a>"
+                    + "</section>"
+            );
+
             return;
         }
-        String f = input("Full name", "name", "text", "", true) + input("Email", "email", "email", "", true)
-            + input("Password (min 6 chars)", "password", "password", "", true)
-            + select("I am a", "role", List.of(new String[]{"STUDENT", "Student"}, new String[]{"INSTRUCTOR", "Instructor"}), "STUDENT");
-        page(q, r, null, "Register", "<section class='card narrow'><h2>Create account</h2>" + form("/register", f, "Register")
-            + "<p class='muted'>Already registered? <a href='/login'>Sign in</a></p></section>");
+
+        // Use the existing HTML registration form.
+        r.sendRedirect("/register.html");
     }
 
-    private void register(HttpServletRequest q, HttpServletResponse r) throws Exception {
-        if (!"true".equals(Db.setting("allow_registration", "true"))) throw new LmsException("Registration is closed.");
-        String name = req(q, "name"), email = req(q, "email").toLowerCase(), pw = req(q, "password"), role = str(q, "role");
-        if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) throw new LmsException("Please enter a valid email address.");
-        if (pw.length() < 6) throw new LmsException("Password must be at least 6 characters.");
-        if (!role.equals("STUDENT") && !role.equals("INSTRUCTOR")) throw new LmsException("Invalid role.");
-        Db.exec("INSERT INTO users(name,email,password,user_role) VALUES(?,?,?,?)", name, email, Db.hash(pw), role);
-        ActivityLog.log("New " + role + " registered: " + email);
+    // ---------- Registration backend ----------
+
+    private void register(
+            HttpServletRequest q,
+            HttpServletResponse r
+    ) throws Exception {
+
+        if (!"true".equals(
+                Db.setting("allow_registration", "true"))) {
+
+            throw new LmsException(
+                    "Registration is closed."
+            );
+        }
+
+        String name = req(q, "name");
+        String email = req(q, "email").toLowerCase();
+        String password = req(q, "password");
+        String role = str(q, "role");
+
+        if (!email.matches(
+                "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+
+            throw new LmsException(
+                    "Please enter a valid email address."
+            );
+        }
+
+        if (password.length() < 6) {
+            throw new LmsException(
+                    "Password must be at least 6 characters."
+            );
+        }
+
+        if (!role.equals("STUDENT")
+                && !role.equals("INSTRUCTOR")) {
+
+            throw new LmsException("Invalid role.");
+        }
+
+        Db.exec(
+                "INSERT INTO users(name,email,password,user_role) "
+                + "VALUES(?,?,?,?)",
+                name,
+                email,
+                Db.hash(password),
+                role
+        );
+
+        ActivityLog.log(
+                "New " + role + " registered: " + email
+        );
+
         ok(q, "Account created. Please sign in.");
-        r.sendRedirect("/login");
+
+        r.sendRedirect("/login.html");
     }
 }

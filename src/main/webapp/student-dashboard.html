@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | EduLearn LMS</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<header class="top">
+    <div class="brand">🎓 EduLearn LMS</div>
+
+    <nav>
+        <a href="/student" class="active">My Learning</a>
+        <a href="/student/browse">Browse Courses</a>
+    </nav>
+
+    <div class="who">
+        <span id="student-name">{{STUDENT_NAME}}</span>
+        <span class="tag">STUDENT</span>
+        <a class="btn sm ghost" href="/logout">Logout</a>
+    </div>
+</header>
+
+<main>
+
+    <h1>Welcome, {{STUDENT_NAME}}</h1>
+
+    <div class="stats">
+        <section class="card">
+            <h3>Enrolled Courses</h3>
+            <div class="stat-number">{{ENROLLED_COUNT}}</div>
+        </section>
+
+        <section class="card">
+            <h3>Overall Grade</h3>
+            <div class="stat-number">{{OVERALL_GRADE}}</div>
+        </section>
+    </div>
+
+    <section class="card">
+        <h2>My Courses &amp; Progress</h2>
+
+        <div id="course-progress">
+            {{COURSE_TABLE}}
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    EduLearn LMS &middot; Java Servlets + JDBC + H2
+    &middot; Galgotias University
+</footer>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

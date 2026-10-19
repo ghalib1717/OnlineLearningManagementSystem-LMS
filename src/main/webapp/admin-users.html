@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management | EduLearn LMS</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="top">
+    <div class="brand">🎓 EduLearn LMS</div>
+
+    <nav>
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/users" class="active">Users</a>
+        <a href="/admin/courses">Courses</a>
+        <a href="/admin/settings">Settings</a>
+    </nav>
+
+    <div class="who">
+        <span>{{ADMIN_NAME}}</span>
+        <span class="tag">ADMIN</span>
+        <a class="btn sm ghost" href="/logout">Logout</a>
+    </div>
+</header>
+
+<main>
+    <h1>User Management</h1>
+
+    <section class="card">
+        <h2>{{FORM_TITLE}}</h2>
+
+        <form method="post" action="/admin/do/saveUser">
+            {{HIDDEN_ID}}
+
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{USER_NAME}}"
+                required
+            >
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{USER_EMAIL}}"
+                required
+            >
+
+            <label for="password">{{PASSWORD_LABEL}}</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                minlength="6"
+                {{PASSWORD_REQUIRED}}
+            >
+
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option value="STUDENT" {{STUDENT_SELECTED}}>Student</option>
+                <option value="INSTRUCTOR" {{INSTRUCTOR_SELECTED}}>Instructor</option>
+                <option value="ADMIN" {{ADMIN_SELECTED}}>Admin</option>
+            </select>
+
+            <button class="btn" type="submit">{{FORM_BUTTON}}</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>All Users</h2>
+        <div id="users-table">{{USERS_TABLE}}</div>
+    </section>
+</main>
+
+<footer>
+    EduLearn LMS &middot; Java Servlets + JDBC + H2
+    &middot; Galgotias University
+</footer>
+
+<script src="/js/script.js"></script>
+</body>
+</html>

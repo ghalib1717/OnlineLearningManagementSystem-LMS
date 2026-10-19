@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Instructor Dashboard | EduLearn LMS</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="top">
+
+        <div class="brand">
+            🎓 EduLearn LMS
+        </div>
+
+        <nav>
+            <a href="/instructor" class="active">My Courses</a>
+        </nav>
+
+        <div class="who">
+            <span id="instructor-name">{{INSTRUCTOR_NAME}}</span>
+
+            <span class="tag">INSTRUCTOR</span>
+
+            <a class="btn sm ghost" href="/logout">Logout</a>
+        </div>
+
+    </header>
+
+    <!-- Main dashboard -->
+    <main>
+
+        <h1>Instructor Dashboard</h1>
+
+        <!-- Course statistics -->
+        <section class="card">
+
+            <h2>My Courses &amp; Enrollment Statistics</h2>
+
+            <div id="course-statistics">
+                {{COURSE_STATISTICS}}
+            </div>
+
+        </section>
+
+        <!-- Create course -->
+        <section class="card">
+
+            <h2>Create a New Course</h2>
+
+            <form method="post" action="/instructor/do/saveCourse">
+
+                <label for="title">Course Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter course title"
+                    required
+                >
+
+                <label for="description">Description</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Enter course description"
+                ></textarea>
+
+                <label for="syllabus">Syllabus</label>
+
+                <textarea
+                    id="syllabus"
+                    name="syllabus"
+                    rows="4"
+                    placeholder="Enter course syllabus"
+                ></textarea>
+
+                <button class="btn" type="submit">
+                    Create Course
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        EduLearn LMS &middot; Java Servlets + JDBC + H2
+        &middot; Galgotias University
+    </footer>
+
+    <script src="/js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+/* ==============================
+   GLOBAL STYLES
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --secondary: #7c3aed;
+    --background: #f3f5fb;
+    --surface: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --success: #16a34a;
+    --danger: #dc2626;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ==============================
+   HOME PAGE
+============================== */
+
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 30px;
+    line-height: 1.4;
+}
+
+.container {
+    width: calc(100% - 32px);
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: var(--surface);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+}
+
+h2 {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.buttons a {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.buttons a:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* ==============================
+   LOGIN AND REGISTRATION
+============================== */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.card {
+    width: 100%;
+    max-width: 900px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+}
+
+.card.narrow {
+    max-width: 450px;
+}
+
+.card h2 {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* ==============================
+   SHOW / HIDE PASSWORD
+============================== */
+
+.password-field {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-group .password-field input {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+}
+
+.toggle-password {
+    flex-shrink: 0;
+    padding: 0 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background: #f1f5f9;
+    color: #1e293b;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.toggle-password:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.toggle-password:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+form .btn {
+    width: 100%;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ==============================
+   TEXT AND FEEDBACK
+============================== */
+
+.muted,
+.hint {
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.muted {
+    text-align: center;
+}
+
+.muted a {
+    color: var(--primary);
+}
+
+.hint {
+    padding: 12px;
+    background: #f1f5f9;
+    border-radius: 7px;
+}
+
+.success {
+    color: var(--success);
+}
+
+.error {
+    color: var(--danger);
+}
+
+/* ==============================
+   DASHBOARD NAVIGATION
+============================== */
+
+nav {
+    background: linear-gradient(110deg, #4f46e5, #7c3aed);
+    color: white;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    opacity: 0.85;
+}
+
+/* ==============================
+   TABLES
+============================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: white;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+tr:hover td {
+    background: #fafaff;
+}
+
+/* ==============================
+   LINKS
+============================== */
+
+a {
+    transition: color 0.2s;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+@media (max-width: 768px) {
+    header {
+        padding: 18px 12px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        margin: 24px auto;
+        padding: 20px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .buttons a {
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 14px;
+    }
+
+    .card {
+        padding: 20px 16px;
+    }
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    .password-field {
+        gap: 6px;
+    }
+
+    .toggle-password {
+        padding: 0 10px;
+    }
+}

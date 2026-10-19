@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings | EduLearn LMS</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="top">
+    <div class="brand">🎓 EduLearn LMS</div>
+
+    <nav>
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/courses">Courses</a>
+        <a href="/admin/settings" class="active">Settings</a>
+    </nav>
+
+    <div class="who">
+        <span>{{ADMIN_NAME}}</span>
+        <span class="tag">ADMIN</span>
+        <a class="btn sm ghost" href="/logout">Logout</a>
+    </div>
+</header>
+
+<main>
+    <h1>System Settings</h1>
+
+    <section class="card">
+        <h2>Configuration</h2>
+
+        <form method="post" action="/admin/do/saveSettings">
+
+            <label for="site_name">Site name</label>
+            <input
+                type="text"
+                id="site_name"
+                name="site_name"
+                value="{{SITE_NAME}}"
+                required
+            >
+
+            <label for="allow_registration">Self-registration</label>
+            <select id="allow_registration" name="allow_registration">
+                <option value="true" {{REGISTRATION_OPEN}}>Open</option>
+                <option value="false" {{REGISTRATION_CLOSED}}>Closed</option>
+            </select>
+
+            <button class="btn" type="submit">Update settings</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    EduLearn LMS &middot; Java Servlets + JDBC + H2 &middot; Galgotias University
+</footer>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

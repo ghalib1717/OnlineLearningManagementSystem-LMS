@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduLearn LMS - Register</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .password-field {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .password-field input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toggle-password {
+            padding: 0 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            background: #f1f5f9;
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .toggle-password:hover {
+            background: #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="auth-container">
+
+        <section class="card narrow">
+
+            <h2>Create Account</h2>
+
+            <form action="/register" method="post">
+
+                <!-- Full Name -->
+                <div class="form-group">
+
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group">
+
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <div class="password-field">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Minimum 6 characters"
+                            minlength="6"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="password"
+                            aria-controls="password"
+                            aria-pressed="false"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Role Selection -->
+                <div class="form-group">
+
+                    <label for="role">Register As</label>
+
+                    <select id="role" name="role" required>
+
+                        <option value="STUDENT">
+                            Student
+                        </option>
+
+                        <option value="INSTRUCTOR">
+                            Instructor
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Create Account Button -->
+                <button type="submit" class="btn">
+                    Create Account
+                </button>
+
+            </form>
+
+            <!-- Sign In Link -->
+            <p class="muted">
+                Already have an account?
+                <a href="/login.html">Sign in</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>

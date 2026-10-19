@@ -3,3 +3,14 @@ data/
 *.class
 .idea/
 *.iml
+# Java crash logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Database files
+*.db
+*.mv.db
+*.trace.db
+
+# IDE files
+.vscode/

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | EduLearn LMS</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<header class="top">
+    <div class="brand">🎓 EduLearn LMS</div>
+
+    <nav>
+        <a href="/admin" class="active">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/courses">Courses</a>
+        <a href="/admin/settings">Settings</a>
+    </nav>
+
+    <div class="who">
+        <span>{{ADMIN_NAME}}</span>
+        <span class="tag">ADMIN</span>
+        <a class="btn sm ghost" href="/logout">Logout</a>
+    </div>
+</header>
+
+<main>
+
+    <h1>Admin Dashboard</h1>
+
+    <section class="card">
+        <h2>System Statistics</h2>
+        <div class="stats">
+            <div class="stat">
+                <b>{{STUDENT_COUNT}}</b>
+                <span>Students</span>
+            </div>
+
+            <div class="stat">
+                <b>{{INSTRUCTOR_COUNT}}</b>
+                <span>Instructors</span>
+            </div>
+
+            <div class="stat">
+                <b>{{COURSE_COUNT}}</b>
+                <span>Courses</span>
+            </div>
+
+            <div class="stat">
+                <b>{{ENROLLMENT_COUNT}}</b>
+                <span>Enrollments</span>
+            </div>
+
+            <div class="stat">
+                <b>{{SUBMISSION_COUNT}}</b>
+                <span>Submissions</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Performance Analytics</h2>
+        <div id="performance-analytics">
+            {{PERFORMANCE_TABLE}}
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>
+            System Activity Monitor
+            <small class="muted">(auto-refreshes)</small>
+        </h2>
+
+        <div id="activity-monitor">
+            {{ACTIVITY_TABLE}}
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    EduLearn LMS &middot; Java Servlets + JDBC + H2
+    &middot; Galgotias University
+</footer>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
