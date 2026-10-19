@@ -403,14 +403,12 @@ Ensure that sensitive configuration files, credentials, and private database inf
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Ghalib Hussain**
+**Jay Prakash**
+**Arun Sharma**
 
 ---
 
 ## 📄 License
 
 No license has been specified for this project.
-
-Unless a license is added to the repository, others should not assume that they have permission to redistribute or reuse the project.
-
----
